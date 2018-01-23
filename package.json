@@ -1,0 +1,34 @@
+{
+  "name": "gca-wincfg",
+  "version": "1.0.0",
+  "main": "config.js",
+  "description": "Nintendo® Wii U GameCube™ Adapter driver install script for Windows.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "postinstall": "node config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yonicstudios/gca-node.git"
+  },
+  "keywords": [
+    "gamecube",
+    "wiiu",
+    "controller",
+    "adapter",
+    "gamedev",
+    "drivers",
+    "gaming"
+  ],
+  "dependencies": {
+    "nan": "^2.5.1"
+  },
+  "author": "YonicStudios",
+  "license": "GPL-3.0",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/yonicstudios/gca-wincfg/issues"
+  },
+  "homepage": "https://github.com/yonicstudios/gca-wincfg#readme"
+}
