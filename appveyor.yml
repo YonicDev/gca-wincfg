@@ -1,6 +1,14 @@
 environment:
   nodejs_version: "7"
 
+image:
+- Visual Studio 2015
+- Visual Studio 2017
+
+branches:
+    only:
+        - appveyor
+
 clone_script:
 - cmd: git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
 - cmd: cd %APPVEYOR_BUILD_FOLDER%
