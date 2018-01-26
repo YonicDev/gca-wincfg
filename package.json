@@ -4,7 +4,7 @@
   "main": "config.js",
   "description": "Nintendo® Wii U GameCube™ Adapter driver install script for Windows.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "install": "node-gyp rebuild --verbose"
   },
   "repository": {
