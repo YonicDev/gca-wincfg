@@ -1,4 +1,4 @@
-var gca = require('./build/Debug/gca-wincfg.node');
+var gca = require('./build/Release/gca-wincfg.node');
 var errorCode;
 
 if (gca.GetAdapterDriver() == "WinUSB") {
