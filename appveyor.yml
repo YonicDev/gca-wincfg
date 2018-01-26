@@ -1,32 +1,37 @@
 environment:
-  nodejs_version: "7"
-  npm_config_arch: x64
-  npm_config_target_arch: x64
+
+  matrix:
+    - node_version: '4'
+    - node_version: '5'
+    - node_version: '6'
+    - node_version: '7'
+    - node_version: '8'
+    - node_version: '9'
 
 image:
-- Visual Studio 2015
-- Visual Studio 2017
+    - Visual Studio 2015
+    - Visual Studio 2017
 
-clone_script:
-- cmd: git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
-- cmd: cd %APPVEYOR_BUILD_FOLDER%
-- cmd: git checkout -q %APPVEYOR_REPO_COMMIT%
-- cmd: git submodule update --init --recursive
-
-# Install scripts. (runs after repo cloning)
 install:
-  # Get the latest stable version of Node.js or io.js
-  - ps: Install-Product node $env:nodejs_version
-  # install modules
-  - npm install
+  - ps: Install-Product node $env:node_version $env:platform
+  - npm install -g node-gyp node-pre-gyp
+  - ps: npm config -g set node-gyp "$(npm config -g get prefix)\node_modules\node-gyp\bin\node-gyp.js"
+  - ps: if ($env:appveyor_repo_tag -match "true" -and $env:appveyor_repo_tag_name -match '^v?[0-9]') { $publish_binary=1; }
 
-# Post-install test scripts.
-test_script:
-  # Output useful info for debugging.
-  - node --version
-  - npm --version
-  # run tests
-  - npm test
+build_script:
+  - ps: echo $publish_binary
+  - git submodule update --init
+  - npm install --build-from-source
+  - .\node_modules\.bin\node-pre-gyp package
+  - ps: |
+      $ErrorActionPreference = 'Continue'
+      if ($publish_binary -Eq "1") {
+        node-pre-gyp-github publish 2>&1 | write-host
+        if (-Not ($?)) {
+          throw "Failed publishing";
+        }
+      }
+      echo "done."
 
-# Don't actually build.
-build: off
+platform:
+  - x64
