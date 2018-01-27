@@ -29,7 +29,7 @@
   },
   "binary": {
         "module_name": "gca_wincfg",
-        "module_path": "./build/Release",
+        "module_path": "./build/Release/binding",
         "host": "https://github.com/tessel/node-usb/releases/download/",
         "remote_path": "{version}"
    },
