@@ -1,6 +1,6 @@
-﻿# gca-wincfg
-[![Build status](https://ci.appveyor.com/api/projects/status/py0lk9bq06axg2m8?svg=true)](https://ci.appveyor.com/project/yonicstudios/gca-wincfg)
+# gca-wincfg
 
+[![Build status](https://ci.appveyor.com/api/projects/status/py0lk9bq06axg2m8/branch/master?svg=true)](https://ci.appveyor.com/project/yonicstudios/gca-wincfg/branch/master)
 
 This is the Configuration Module which allows the Nintendo&reg; Wii U&trade; GameCube Adapter to be used in Windows. Although it is designed to be used in Node.js applications such as [gca-js](https://github.com/YonicDev/gca-js) and [gca-node](https://github.com/YonicDev/gca-node), the source code can be extended to C++ applications, such as gca+. 
 
@@ -11,7 +11,22 @@ This is the Configuration Module which allows the Nintendo&reg; Wii U&trade; Gam
 
 ## Usage
 gca-wincfg is intended for developers to automatize the configuration of the Nintendo&reg; Wii U&trade; GameCube Adapter in their games. For consumer purposes, manually configure it with [Zadig](http://zadig.akeo.ie/).
-The simplest structure of configuration is shown in [examples/config.js](https://github.com/YonicDev/gca-wincfg/blob/master/examples/config.js).
+
+To add gca-wincfg to your project, install it as an npm package.
+```
+npm install gca-wincfg
+```
+
+After doing so, move the libwbdi.dll from this repository to your node package root folder (in future releases, this will be done automatically).
+
+To actually use wincfg in your project, add the following to the scripts where you want to use it:
+
+```
+var gca_config = require('gca-wincfg');
+```
+
+The simplest structure of configuration is shown in [examples/config.js](https://github.com/YonicDev/gca-wincfg/blob/master/examples/config.js). There can be anything in-between the functions in this basic skeleton, but these three functions must be called in that order.
+
 As for error handling, gca-wincfg returns the same error codes as [libwdi](https://github.com/pbatard/libwdi).
 
 ##  FAQ
