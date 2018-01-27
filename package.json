@@ -5,7 +5,7 @@
   "description": "Nintendo® Wii U GameCube™ Adapter driver install script for Windows.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "install": "node-gyp rebuild --verbose"
+    "install": "node-pre-gyp rebuild --fallback-to-build"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,19 @@
     "gaming"
   ],
   "dependencies": {
-    "nan": "^2.5.1"
+    "nan": "^2.5.1",
+    "node-pre-gyp": "^0.6.30"
   },
+  "devDependencies": {
+      "aws-sdk": "2.x"
+  },
+  "binary": {
+        "module_name": "gca_wincfg",
+        "module_path": "./build/Release",
+        "host": "https://github.com/tessel/node-usb/releases/download/",
+        "remote_path": "{version}"
+   },
+  "bundledDependencies":["node-pre-gyp"],
   "author": "YonicStudios",
   "license": "GPL-3.0",
   "gypfile": true,
