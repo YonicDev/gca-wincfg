@@ -30,7 +30,7 @@
   "binary": {
         "module_name": "gca_wincfg",
         "module_path": "./build/Release/binding",
-        "host": "https://github.com/tessel/node-usb/releases/download/",
+        "host": "https://github.com/YonicDev/gca-wincfg/releases/download/",
         "remote_path": "{version}"
    },
   "bundledDependencies":["node-pre-gyp"],
