@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yonicstudios/gca-node.git"
+    "url": "git+https://github.com/YonicDev/gca-wincfg.git"
   },
   "keywords": [
     "gamecube",
