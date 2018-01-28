@@ -10,7 +10,6 @@ environment:
 
 image:
     - Visual Studio 2015
-    - Visual Studio 2017
 
 install:
   - ps: Install-Product node $env:node_version $env:platform
@@ -35,6 +34,13 @@ build_script:
         }
       }
       echo "done."
+
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
 
 platform:
   - x64
