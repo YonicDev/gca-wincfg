@@ -13,7 +13,7 @@ image:
 
 install:
   - ps: Install-Product node $env:node_version $env:platform
-  - npm install -g node-gyp node-pre-gyp
+  - npm install -g node-gyp node-pre-gyp node-pre-gyp-github
   - ps: npm config -g set node-gyp "$(npm config -g get prefix)\node_modules\node-gyp\bin\node-gyp.js"
   - ps: if ($env:appveyor_repo_tag -match "true" -and $env:appveyor_repo_tag_name -match '^v?[0-9]') { $publish_binary=1; }
 
@@ -28,7 +28,7 @@ build_script:
   - ps: |
       $ErrorActionPreference = 'Continue'
       if ($publish_binary -Eq "1") {
-        .\node_modules\.bin\node-pre-gyp-github publish 2>&1 | write-host
+        node-pre-gyp-github publish 2>&1 | write-host
         if (-Not ($?)) {
           throw "Failed publishing";
         }
