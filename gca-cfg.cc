@@ -16,7 +16,13 @@ struct wdi_options_install_driver installer_options;
 const short WIIU_VID = 0x057E;
 const short WIIU_PID = 0x0337;
 
-NAN_METHOD(GetAdapterDriver) {
+std::string uint64_to_string(UINT64 value) {
+	std::ostringstream os;
+	os << value;
+	return os.str();
+}
+
+NAN_METHOD(GetAdapter) {
 	if (info.Length() > 0) {
 		std::stringstream ss;
 		ss << "GetAdapterDriver has " << info.Length() << " parameters, when it only accepts 0";
@@ -27,11 +33,31 @@ NAN_METHOD(GetAdapterDriver) {
 	options.list_all = true;
 	if (wdi_create_list(&list, &options) == WDI_SUCCESS) {
 		for (device = list; !(device->vid == WIIU_VID && device->pid == WIIU_PID) && device != NULL; device = device->next);
+
 		if (device != NULL) {
+			v8::Local<v8::Object> adapter = New<v8::Object>();
+
+			adapter->Set(New<v8::String>("descriptor").ToLocalChecked(),New<v8::String>(device->desc).ToLocalChecked());
+			adapter->Set(New<v8::String>("VID").ToLocalChecked(), New<v8::Number>(device->vid));
+			adapter->Set(New<v8::String>("PID").ToLocalChecked(), New<v8::Number>(device->pid));
+			adapter->Set(New<v8::String>("driver").ToLocalChecked(), New<v8::String>(device->driver).ToLocalChecked());
+			adapter->Set(New<v8::String>("driverVersion").ToLocalChecked(), New<v8::String>(uint64_to_string(device->driver_version)).ToLocalChecked());
+			adapter->Set(New<v8::String>("deviceId").ToLocalChecked(), New<v8::String>(device->device_id).ToLocalChecked());
+			adapter->Set(New<v8::String>("compatibleId").ToLocalChecked(), New<v8::String>(device->compatible_id).ToLocalChecked());
+			adapter->Set(New<v8::String>("hardwareId").ToLocalChecked(), New<v8::String>(device->hardware_id).ToLocalChecked());
+			adapter->Set(New<v8::String>("isComposite").ToLocalChecked(), New<v8::Boolean>(device->is_composite));
+			if(device->is_composite)
+				adapter->Set(New<v8::String>("m_interface").ToLocalChecked(), New<v8::Number>(device->mi));
+			if(device->upper_filter!=NULL)
+				adapter->Set(New<v8::String>("upperFilter").ToLocalChecked(), New<v8::String>(device->upper_filter).ToLocalChecked());
+
 			v8::Local<v8::String> return_value = New<v8::String>(device->driver).ToLocalChecked();
-			info.GetReturnValue().Set(return_value);
-		} else
+			info.GetReturnValue().Set(adapter);
+		}
+		else {
 			ThrowError("No compatible Gamecube Adapter has been found");
+			info.GetReturnValue().Set(New<v8::Number>(0));
+		}
 		wdi_destroy_list(list);
 	}
 }
@@ -102,7 +128,7 @@ NAN_METHOD(InstallAdapterDriver) {
 }
 
 NAN_MODULE_INIT(Init) {
-	NAN_EXPORT(target, GetAdapterDriver);
+	NAN_EXPORT(target, GetAdapter);
 	NAN_EXPORT(target, PrepareAdapterDriver);
 	NAN_EXPORT(target, InstallAdapterDriver);
 }

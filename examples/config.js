@@ -1,7 +1,7 @@
 var gca = require('gca-wincfg');
 var errorCode;
 
-if (gca.GetAdapterDriver() == "WinUSB") {
+if (gca.GetAdapter().driver == "WinUSB") {
     console.log("[GCA-WINCFG|LOG] This Gamecube Adapter already has the correct driver installed. Won't do anything.");
 } else {
     console.log("[GCA-WINCFG|LOG] This Gamecube Adapter doesn't have the correct driver installed. This program will automatically configure it.");
