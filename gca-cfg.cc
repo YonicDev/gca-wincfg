@@ -61,6 +61,7 @@ NAN_METHOD(PrepareAdapterDriver) {
 			info.GetReturnValue().Set(return_value);
 		} else
 			ThrowError("No compatible Gamecube Adapter has been found");
+		wdi_destroy_list(list);
 	} else
 		ThrowError("Windows Driver Installer could not find any USB device.");
 }
@@ -82,12 +83,7 @@ NAN_METHOD(InstallAdapterDriver) {
 		ThrowTypeError("Expected a String in arg 1 of InstallAdapterDriver.");
 		return;
 	}
-	if (info[2]->IsUndefined() || !info[2]->IsNumber()) {
-		timeout = 30000;
-	}
-	else {
-		timeout = info[2]->Int32Value();
-	}
+	timeout = info[2]->IsUndefined() || !info[2]->IsNumber()? 30000 : info[2]->Int32Value();;
 	if (wdi_create_list(&list, &options) == WDI_SUCCESS) {
 		installer_options.pending_install_timeout = timeout;
 		driver_options.driver_type = WDI_WINUSB;
@@ -101,6 +97,7 @@ NAN_METHOD(InstallAdapterDriver) {
 		}
 		else
 			ThrowError("No compatible Gamecube Adapter has been found. Make sure you have one plugged in.");
+		wdi_destroy_list(list);
 	}
 }
 
