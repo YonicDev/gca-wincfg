@@ -16,10 +16,14 @@ struct wdi_options_install_driver installer_options;
 const short WIIU_VID = 0x057E;
 const short WIIU_PID = 0x0337;
 
-std::string uint64_to_string(UINT64 value) {
-	std::ostringstream os;
-	os << value;
-	return os.str();
+std::string format_driver_version(UINT64 driver_version) {
+	std::stringstream output;
+	unsigned short destination[4];
+	for (int i = 0; i < 4; i++) {
+		destination[3 - i] = (short)(driver_version >> 16 * i);
+	}
+	output << destination[0] << "." << destination[1] << "." << destination[2] << "." << destination[3];
+	return output.str();
 }
 
 NAN_METHOD(GetAdapter) {
@@ -41,7 +45,7 @@ NAN_METHOD(GetAdapter) {
 			adapter->Set(New<v8::String>("VID").ToLocalChecked(), New<v8::Number>(device->vid));
 			adapter->Set(New<v8::String>("PID").ToLocalChecked(), New<v8::Number>(device->pid));
 			adapter->Set(New<v8::String>("driver").ToLocalChecked(), New<v8::String>(device->driver).ToLocalChecked());
-			adapter->Set(New<v8::String>("driverVersion").ToLocalChecked(), New<v8::String>(uint64_to_string(device->driver_version)).ToLocalChecked());
+			adapter->Set(New<v8::String>("driverVersion").ToLocalChecked(), New<v8::String>(format_driver_version(device->driver_version)).ToLocalChecked());
 			adapter->Set(New<v8::String>("deviceId").ToLocalChecked(), New<v8::String>(device->device_id).ToLocalChecked());
 			adapter->Set(New<v8::String>("compatibleId").ToLocalChecked(), New<v8::String>(device->compatible_id).ToLocalChecked());
 			adapter->Set(New<v8::String>("hardwareId").ToLocalChecked(), New<v8::String>(device->hardware_id).ToLocalChecked());
