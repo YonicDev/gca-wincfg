@@ -2,11 +2,11 @@
   "targets": [
     {
       "link_settings": {
-        "libraries":["../lib/libwdi.lib"]
+        "libraries":["../lib/libwdi.lib","setupapi.lib"]
       },
       "include_dirs" : [
         "<!(node -e \"require('nan')\")",
-	"libwdi/libwdi"
+	    "libwdi/libwdi"
       ],
       "target_name": "gca-wincfg",
       "sources": [ "gca-cfg.cc" ]
