@@ -16,8 +16,7 @@ To add gca-wincfg to your project, install it as an npm package.
 ```
 npm install gca-wincfg
 ```
-
-After doing so, move the libwbdi.dll from this repository to your node package root folder (in future releases, this will be done automatically).
+> **Note:** In versions prior to 1.1.0, move the libwbdi.dll from this repository to your node package root folder.
 
 To actually use wincfg in your project, add the following to the scripts where you want to use it:
 
@@ -25,7 +24,7 @@ To actually use wincfg in your project, add the following to the scripts where y
 var gca_config = require('gca-wincfg');
 ```
 
-The simplest structure of configuration is shown in [examples/config.js](https://github.com/YonicDev/gca-wincfg/blob/master/examples/config.js). There can be anything in-between the functions in this basic skeleton, but these three functions must be called in that order.
+The simplest structure of configuration is shown in [examples/config.js](https://github.com/YonicDev/gca-wincfg/blob/master/examples/config.js), alongside a couple of logs. There can be anything in-between the functions in this basic skeleton, but these three functions must be called in that order.
 
 As for error handling, gca-wincfg returns the same error codes as [libwdi](https://github.com/pbatard/libwdi).
 
