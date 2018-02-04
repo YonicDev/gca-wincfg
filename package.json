@@ -1,6 +1,6 @@
 {
   "name": "gca-wincfg",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "index.js",
   "description": "Nintendo® Wii U GameCube™ Adapter driver install script for Windows.",
   "scripts": {
