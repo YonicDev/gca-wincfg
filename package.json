@@ -3,6 +3,8 @@
   "version": "1.1.0",
   "main": "index.js",
   "description": "Nintendo® Wii U GameCube™ Adapter driver install script for Windows.",
+  "os":["win32"],
+  "cpu":["x64"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "install": "node-pre-gyp install —fallback-to-build"
@@ -27,6 +29,7 @@
   "devDependencies": {
     "aws-sdk": "2.x"
   },
+  "bin":{"gca-config": "cli.js"},
   "binary": {
     "module_name": "gca_wincfg",
     "module_path": "./build/Release/binding",
